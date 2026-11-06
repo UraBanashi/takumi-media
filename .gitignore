@@ -1,0 +1,14 @@
+# dependencies
+node_modules/
+
+# build output
+.next/
+
+# env files (secrets)
+.env.local
+.env.*.local
+
+# misc
+.DS_Store
+*.pem
+npm-debug.log*
