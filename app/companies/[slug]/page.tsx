@@ -32,7 +32,28 @@ export default async function CompanyDetailPage({ params }: Props) {
   const company = await getCompanyBySlug(slug)
   if (!company) notFound()
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: company.name,
+    description: company.description ?? undefined,
+    url: company.website_url ?? undefined,
+    address: {
+      '@type': 'PostalAddress',
+      addressRegion: company.prefecture,
+      addressLocality: company.city ?? undefined,
+      addressCountry: 'JP',
+    },
+    ...(company.established ? { foundingDate: String(company.established) } : {}),
+    ...(company.employees ? { numberOfEmployees: { '@type': 'QuantitativeValue', value: company.employees } } : {}),
+  }
+
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* パンくず */}
       <nav className="text-sm text-gray-400 mb-6 flex items-center gap-1">
@@ -231,5 +252,6 @@ export default async function CompanyDetailPage({ params }: Props) {
         </section>
       )}
     </div>
+    </>
   )
 }
