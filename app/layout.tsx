@@ -27,6 +27,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://takumi.urabanashi.com',
   },
+  verification: {
+    google: 'Uscjv-jQ_cKa5tbNlYZT85w8s4haE1Gk-pWLCq2f3Z4',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
